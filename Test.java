@@ -3,6 +3,7 @@ import java.util.*;
 import algorithmes.Algorithme;
 import algorithmes.AlgorithmeAldousBroder;
 import algorithmes.AlgorithmeKruskal;
+import algorithmes.AlgorithmeWilson;
 import structure.Display;
 import structure.Edge;
 import structure.Graph;
@@ -112,13 +113,20 @@ public class Test{
 	
 	//methode lancer par le programme
 	public static void main(String[] args) {
-		//Q5 |
-		mainAlgo1Million(new AlgorithmeAldousBroder());
+		long debut = System.currentTimeMillis();
+		
+		//Q6 |
+		mainAlgo1Million(new AlgorithmeWilson());
+		
+		//Q5 |		mainAlgo1Million(new AlgorithmeAldousBroder());
 		
 		//Q4 |		mainAlgo1Million(new AlgorithmeKruskal());
 		
 		
 		//main de base | mainDeBase();
+		
+		//affiche la duree d'execution en millisecondes
+		System.out.println(System.currentTimeMillis()-debut);
 	}
 
 	//test les 1Millions de possibilité pour le graphe G1 avec un algorithme donne
@@ -130,7 +138,7 @@ public class Test{
 		HashMap<Graph, Integer> graphes = new HashMap<Graph, Integer>();
 		
 		for(int i=0; i<1000000; i++) {
-			System.out.println(i);
+			//System.out.println(i);
 			Graph graph2 = algo.executer(graph1);
 			boolean sameGraph = false;
 
