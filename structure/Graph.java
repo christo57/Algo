@@ -1,11 +1,10 @@
+package structure;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.io.*;
 import java.awt.*;
 import java.awt.image.*;
 
-class Graph{
+public class Graph{
 	private ArrayList<Edge>[] adj;
 	private int[] coordX;
 	private int[] coordY;
@@ -38,8 +37,8 @@ class Graph{
 
 
 	public void addEdge(Edge e){
-		int v = e.from;
-		int w = e.to;
+		int v = e.getFrom();
+		int w = e.getTo();
 		adj[v].add(e);
 		adj[w].add(e);
 	}
@@ -52,13 +51,13 @@ class Graph{
 		ArrayList<Edge> list = new ArrayList<Edge>();
 		for (int v = 0; v < V; v++)
 			for (Edge e : adj(v)) {
-				if (e.from == v)
+				if (e.getFrom() == v)
 					list.add(e);
 			}
 		return list;
 	}
 
-	static Graph G0(){
+	public static Graph G0(){
 		Graph g = new Graph(7);
 		g.setCoordinate(0, 150,50);
 		g.setCoordinate(1, 100,100);
@@ -83,7 +82,7 @@ class Graph{
 		return g;
 	}
 	
-	static Graph G1(){
+	public static Graph G1(){
 		Graph g = new Graph(4);
 		g.setCoordinate(0, 50,50);
 		g.setCoordinate(1, 100,50);
@@ -97,61 +96,6 @@ class Graph{
 		g.addEdge(new Edge(2,3));
 
 		return g;
-	}
-	
-	
-
-	public ArrayList<Edge> edgesAleatoire(){
-		ArrayList<Edge> edges = this.edges();
-		int taille = edges.size();
-
-		ArrayList<Edge> aleatoire = new ArrayList<Edge>();
-		for(int i=0; i<taille;i++) {
-			aleatoire.add(null);
-		}
-
-		for (Edge e : edges) {
-			int i = (int) (Math.random()* taille);
-			while(aleatoire.get(i) != null) {
-				i = (int) (Math.random()* taille);
-			}
-			aleatoire.set(i, e);
-		}
-		return aleatoire;
-	}
-
-	public Graph kruskal() {
-		Graph graph = new Graph(this.V);
-		for (int i=0; i<this.coordX.length; i++) {
-			graph.setCoordinate(i, this.coordX[i], this.coordY[i]);
-		}
-
-		ArrayList<Edge> aleatoire = this.edgesAleatoire();
-		
-		/**key = numero de sommet
-		 * value = partie du graphe
-		**/
-		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
-		int i = 0;
-		while(i<=V) {
-			map.put(i, i);
-			i++;
-		}
-		
-		for (Edge edge : aleatoire) {
-			int valueFrom = map.get(edge.from);
-			int valueTo = map.get(edge.to);
-			
-			if(valueFrom != valueTo) {
-				graph.addEdge(edge);
-				
-				for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-				    if(entry.getValue() == valueTo) entry.setValue(valueFrom);
-				}
-			}
-		}
-
-		return graph;
 	}
 
 
@@ -184,9 +128,9 @@ class Graph{
 		// dessine les arêtes 
 		for (Edge e: edges())
 		{
-			int i = e.from;
-			int j = e.to;
-			if (e.used)
+			int i = e.getFrom();
+			int j = e.getTo();
+			if (e.isUsed())
 				g2d.setColor(Color.RED);
 			else
 				g2d.setColor(Color.GRAY);
@@ -212,11 +156,51 @@ class Graph{
 			PrintWriter writer = new PrintWriter(s, "UTF-8");
 			writer.println("digraph G{");
 			for (Edge e: edges())
-				writer.println(e.from + "->" + e.to+";");
+				writer.println(e.getFrom() + "->" + e.getTo() +";");
 			writer.println("}");
 			writer.close();
 		}
 		catch (IOException e){
 		}                                             
-	}    
+	}
+	
+	
+	//getters and setters
+	
+
+	public ArrayList<Edge>[] getAdj() {
+		return adj;
+	}
+
+	public void setAdj(ArrayList<Edge>[] adj) {
+		this.adj = adj;
+	}
+
+	public int[] getCoordX() {
+		return coordX;
+	}
+
+	public void setCoordX(int[] coordX) {
+		this.coordX = coordX;
+	}
+
+	public int[] getCoordY() {
+		return coordY;
+	}
+
+	public void setCoordY(int[] coordY) {
+		this.coordY = coordY;
+	}
+
+	public int getE() {
+		return E;
+	}
+
+	public void setE(int e) {
+		E = e;
+	}
+
+	public int getV() {
+		return V;
+	} 
 }

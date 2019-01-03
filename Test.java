@@ -1,8 +1,12 @@
-//package graphe;
 import java.io.*;
-
-
 import java.util.*;
+import algorithmes.Algorithme;
+import algorithmes.AlgorithmeAldousBroder;
+import algorithmes.AlgorithmeKruskal;
+import structure.Display;
+import structure.Edge;
+import structure.Graph;
+
 public class Test{
 
 
@@ -65,12 +69,12 @@ public class Test{
 
 				for (Edge e: G.edges())
 				{
-					int i = e.from % size;
-					int j = e.from / size;
+					int i = e.getFrom() % size;
+					int j = e.getFrom() / size;
 					writer.println(String.format(Locale.US, "\\begin{scope}[xshift=%dcm, yshift=%dcm]", i , j));
-					if (e.to == e.from + size){
+					if (e.getTo() == e.getFrom() + size){
 						/* arÃªte verticale */
-						if (!e.used)
+						if (!e.isUsed())
 						{
 							writer.println("\\draw (0.4,0.9) -- (0.6,0.9);");
 							writer.println("\\draw (0.4,1.1) -- (0.6,1.1);");			    			    
@@ -84,7 +88,7 @@ public class Test{
 					else{
 						/* arÃªte horizontale */
 
-						if (!e.used)
+						if (!e.isUsed())
 						{
 							writer.println("\\draw (0.9,0.4) -- (0.9,0.6);");
 							writer.println("\\draw (1.1,0.4) -- (1.1,0.6);");			    			    
@@ -104,13 +108,21 @@ public class Test{
 			catch (IOException e){
 			}                                             
 		}    
-
-
-
 	}	
-
-	//test les 1Millions de possibilité pour le graphe G1
+	
+	//methode lancer par le programme
 	public static void main(String[] args) {
+		//Q5 |
+		mainAlgo1Million(new AlgorithmeAldousBroder());
+		
+		//Q4 |		mainAlgo1Million(new AlgorithmeKruskal());
+		
+		
+		//main de base | mainDeBase();
+	}
+
+	//test les 1Millions de possibilité pour le graphe G1 avec un algorithme donne
+	public static void mainAlgo1Million(Algorithme algo) {
 		Graph graph1 = Graph.G1();
 		Display display1 = new Display("graphe");
 		display1.setImage(graph1.toImage());
@@ -118,7 +130,8 @@ public class Test{
 		HashMap<Graph, Integer> graphes = new HashMap<Graph, Integer>();
 		
 		for(int i=0; i<1000000; i++) {
-			Graph graph2 = graph1.kruskal();
+			System.out.println(i);
+			Graph graph2 = algo.executer(graph1);
 			boolean sameGraph = false;
 
 			for (Map.Entry<Graph, Integer> entryGraphes : graphes.entrySet()) {
@@ -134,7 +147,8 @@ public class Test{
 				//comparaison entre les 2 graphes
 				for (Edge edge : graph2.edges()) {
 					for (Map.Entry<Edge, Boolean> entry : edges.entrySet()) {
-					    if(edge.from == entry.getKey().from && edge.to == entry.getKey().to) {
+					    if(edge.getFrom() == entry.getKey().getFrom() &&
+					    		edge.getTo() == entry.getKey().getTo()) {
 					    	entry.setValue(true);
 					    }
 					}
@@ -159,19 +173,16 @@ public class Test{
 		}
 	}
 
-	/**
+
 	//test de base
-	public static void main(String[] args) {
+	public static void mainDeBase() {
 		int size = 4;
-		Graph G = Graph.example();
-		Display d = new Display();
+		Graph G = Graph.G0();
+		Display d = new Display("graphe");
 		d.setImage(G.toImage());
 		System.out.println("appuyez sur une touche");
 		new Scanner(System.in).nextLine();
 		d.close();
 		printLaby(G,size, "toto.tex");
-
-
 	}
-	 **/
 } 
