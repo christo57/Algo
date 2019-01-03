@@ -61,9 +61,7 @@ public class AlgorithmeWilson implements Algorithme{
 					}
 				}
 			}
-		}
-		
-		
+		}	
 		return marcheAleatoire;
 	}
 

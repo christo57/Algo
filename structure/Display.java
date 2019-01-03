@@ -10,7 +10,10 @@ public class Display extends JFrame {
 
 	public  Display(String titre) {
 		super(titre);       // Titre de la fenêtre
-		setPreferredSize(new Dimension(400, 500));  // largeur, hauteur
+		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		int height = (int)dimension.getHeight();
+		int width  = (int)dimension.getWidth();
+		setPreferredSize(new Dimension(height, 1100));  // largeur, hauteur
 
 		jlabel = new JLabel();
 		visible = false;
@@ -23,7 +26,6 @@ public class Display extends JFrame {
 			visible = true;
 			this.setVisible(true);
 		}
-
 		jlabel.setIcon(new ImageIcon(blop));
 
 	}

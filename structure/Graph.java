@@ -8,8 +8,9 @@ public class Graph{
 	private ArrayList<Edge>[] adj;
 	private int[] coordX;
 	private int[] coordY;
-	private final int V;
+	private static int V;
 	private int E;
+	public static final int TAILLE = 30;
 
 	@SuppressWarnings("unchecked")
 	public Graph(int N){
@@ -97,14 +98,17 @@ public class Graph{
 
 		return g;
 	}
-
+	
+	public static Graph G2() {
+		return Grid(20);
+	}
 
 	static Graph Grid(int n){
 		Graph g = new Graph(n*n);
 		int i,j;
 		for (i = 0 ; i < n; i ++) 
 			for (j = 0 ; j < n; j ++) 
-				g.setCoordinate(n*i+j, 50+(300*i)/n,50+(300*j)/n);
+				g.setCoordinate(n*i+j, 25+(1000*i)/n,25+(1000*j)/n);
 
 		for (i = 0 ; i < n; i ++) 
 			for (j = 0 ; j < n; j ++){
@@ -118,10 +122,10 @@ public class Graph{
 
 
 	public BufferedImage toImage(){
-		BufferedImage image = new BufferedImage(400, 400, BufferedImage.TYPE_INT_RGB);
+		BufferedImage image = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2d = image.createGraphics();
 		g2d.setBackground(Color.WHITE);
-		g2d.fillRect(0, 0, 400, 400);
+		g2d.fillRect(0, 0, 1000, 1000);
 		g2d.setColor(Color.BLACK);
 		BasicStroke bs = new BasicStroke(2);
 		g2d.setStroke(bs);
@@ -141,16 +145,53 @@ public class Graph{
 		for (int i = 0; i < V; i++)
 		{
 			g2d.setColor(Color.WHITE);
-			g2d.fillOval(coordX[i]-15, coordY[i]-15,30,30);
+			g2d.fillOval(coordX[i]-TAILLE/2, coordY[i]-TAILLE/2,TAILLE,TAILLE);
 			g2d.setColor(Color.BLACK);
-			g2d.drawOval(coordX[i]-15, coordY[i]-15,30,30);
+			g2d.drawOval(coordX[i]-TAILLE/2, coordY[i]-TAILLE/2,TAILLE,TAILLE);
 			g2d.drawString(Integer.toString(i), coordX[i], coordY[i]);
 		}
 
 		return image;
 	}
+	
+	public BufferedImage toLabyrinthe(){
+		BufferedImage image = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2d = image.createGraphics();
+		g2d.setBackground(Color.WHITE);
+		g2d.fillRect(0, 0, 1000, 1000);
+		g2d.setColor(Color.BLACK);
+		BasicStroke bs = new BasicStroke(2);
+		g2d.setStroke(bs);
+		// dessine les arêtes 
+		for (Edge e: edges())
+		{
+			int i = e.getFrom();
+			int j = e.getTo();
+			if (e.isUsed())
+				g2d.setColor(Color.RED);
+			else
+				g2d.setColor(Color.BLACK);
+			g2d.setStroke(new BasicStroke(10));
+			g2d.drawLine(coordX[i], coordY[i], coordX[j], coordY[j]);
+		}
+		// dessine les sommets 
+		for (int i = 0; i < V; i++)
+		{
+			g2d.setColor(Color.BLACK);
+			g2d.fillRect(coordX[i]-TAILLE/2, coordY[i]-TAILLE/2,TAILLE,TAILLE);
+			if(i==0) {
+				g2d.setColor(Color.WHITE);
+				g2d.drawString("Entree", coordX[i]-TAILLE/2, coordY[i]);
+			}
+			if(i==V-1) {
+				g2d.setColor(Color.WHITE);
+				g2d.drawString("Sortie", coordX[i]-TAILLE/2, coordY[i]);
+			}
+		}
 
-
+		return image;
+	}
+	
 	public void writeFile(String s){
 		try{                      
 			PrintWriter writer = new PrintWriter(s, "UTF-8");

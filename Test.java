@@ -1,9 +1,17 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.*;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import algorithmes.Algorithme;
 import algorithmes.AlgorithmeAldousBroder;
 import algorithmes.AlgorithmeKruskal;
 import algorithmes.AlgorithmeWilson;
+import algorithmes.Labyrinthe;
 import structure.Display;
 import structure.Edge;
 import structure.Graph;
@@ -114,26 +122,78 @@ public class Test{
 	//methode lancer par le programme
 	public static void main(String[] args) {
 		long debut = System.currentTimeMillis();
+		Graph graph1 = Graph.G1();
+		Display display1 = new Display("graphe");
+		display1.setImage(graph1.toImage());
+		JFrame choix = new JFrame("Choix");
+		JButton krusk = new JButton("Algorithme de Kruskal");
+		krusk.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainAlgo1Million(new AlgorithmeKruskal(), graph1);
+				
+			}
+		});
+		JButton ald = new JButton("Algorithme d'Aldous-Broder");
+		ald.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainAlgo1Million(new AlgorithmeAldousBroder(), graph1);				
+			}
+		});
+		JButton wil = new JButton("Algorithme de Wilson");
+		wil.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainAlgo1Million(new AlgorithmeKruskal(), graph1);				
+			}
+		});
 		
-		//Q6 |
-		mainAlgo1Million(new AlgorithmeWilson());
+		JButton labWil = new JButton("Creation Labyrinthe avec algorithme d'Aldous-Broder");
+		labWil.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainLabyrinthe(new AlgorithmeAldousBroder());
+			}
+		});
+		JButton labKrusk = new JButton("Creation Labyrinthe avec algorithme de Kruskal");
+		labKrusk.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainLabyrinthe(new AlgorithmeKruskal());
+				
+			}
+		});
+		JPanel pane = new JPanel();
+		pane.add(krusk);
+		pane.add(wil);
+		pane.add(ald);
+		pane.add(labKrusk);
+		pane.add(labWil);
+		choix.add(pane);
+		choix.pack();
+		choix.setVisible(true);
+		//Q6 |		mainAlgo1Million(new AlgorithmeWilson(), graph1);
 		
-		//Q5 |		mainAlgo1Million(new AlgorithmeAldousBroder());
+		//Q5 |		mainAlgo1Million(new AlgorithmeAldousBroder(), graph1);
 		
-		//Q4 |		mainAlgo1Million(new AlgorithmeKruskal());
+		//Q4 |		mainAlgo1Million(new AlgorithmeKruskal(), graph1);
 		
 		
-		//main de base | mainDeBase();
+		//main de base |	mainDeBase();
 		
 		//affiche la duree d'execution en millisecondes
 		System.out.println(System.currentTimeMillis()-debut);
 	}
 
 	//test les 1Millions de possibilité pour le graphe G1 avec un algorithme donne
-	public static void mainAlgo1Million(Algorithme algo) {
-		Graph graph1 = Graph.G1();
-		Display display1 = new Display("graphe");
-		display1.setImage(graph1.toImage());
+	public static void mainAlgo1Million(Algorithme algo,Graph graph1) {
+	
 
 		HashMap<Graph, Integer> graphes = new HashMap<Graph, Integer>();
 		
@@ -183,14 +243,10 @@ public class Test{
 
 
 	//test de base
-	public static void mainDeBase() {
-		int size = 4;
-		Graph G = Graph.G0();
-		Display d = new Display("graphe");
-		d.setImage(G.toImage());
-		System.out.println("appuyez sur une touche");
-		new Scanner(System.in).nextLine();
-		d.close();
-		printLaby(G,size, "toto.tex");
+	public static void mainLabyrinthe(Algorithme al) {
+		Labyrinthe l = new Labyrinthe(al);
+		Display display1 = new Display("graphe");
+		display1.setImage(l.toImage());
+		
 	}
 } 
