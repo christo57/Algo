@@ -17,9 +17,9 @@ public class Labyrinthe {
 	public Labyrinthe(Algorithme al) {
 		this.size = 20;
 		this.base = al.executer(Graph.G2(this.size));
-		for(Edge e : base.edges()) {
+		for(Edge e : base.edges()) { //on selectionne seulement les arrete de l'arbre couvrant et on met used a false
 			if(!e.isUsed())
-			base.supprimerEdge(e);
+				base.supprimerEdge(e);
 			e.setUsed(false);
 		}
 		this.tmp = new ArrayList<Edge>();
@@ -52,53 +52,53 @@ public class Labyrinthe {
 						b=false;
 					}
 				}
-			}			
-			
+
+			}						
+
 			for(int i=0;i<this.base.getV();i++) { //boucle qui supprime les impasses
 				if(base.adj(i).size()==1){
 					if( i!=base.getEntree() && i!=base.getSortie() ){
 						tmp.add(base.adj(i).get(0));
 						base.supprimerEdge(base.adj(i).get(0));
-						
+
 					}
 				}
 			}
 		}
-		
-		for(Edge e : base.edges()) {
-			distance++;
-			e.setUsed(true);
-		}
-		
-			for(Edge e : tmp) {
-				
-					base.addEdge(e);
+
+			for(Edge e : base.edges()) {//on marque le chemin de l'entree vers la sortie en true
+				distance++;
+				e.setUsed(true);
 			}
-	}
 
-	//getters and setters
-	
-	public Graph getBase() {
-		return base;
-	}
+			for(Edge e : tmp) {	//on remet toutes les arretes
+				base.addEdge(e);
+			}
+		}
 
-	public void setBase(Graph base) {
-		this.base = base;
-	}
+		//getters and setters
 
-	public int getSize() {
-		return size;
-	}
+		public Graph getBase() {
+			return base;
+		}
 
-	public void setSize(int size) {
-		this.size = size;
-	}
+		public void setBase(Graph base) {
+			this.base = base;
+		}
 
-	public int getImpasses() {
-		return impasses;
+		public int getSize() {
+			return size;
+		}
+
+		public void setSize(int size) {
+			this.size = size;
+		}
+
+		public int getImpasses() {
+			return impasses;
+		}
+
+		public int getDistance() {
+			return distance;
+		}
 	}
-	
-	public int getDistance() {
-		return distance;
-	}
-}
