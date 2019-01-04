@@ -121,7 +121,7 @@ public class Test{
 
 	//methode lancer par le programme
 	public static void main(String[] args) {
-		long debut = System.currentTimeMillis();
+		
 		Graph graph1 = Graph.G1();
 		Display display1 = new Display("graphe");
 		display1.setImage(graph1.toImage());
@@ -188,11 +188,11 @@ public class Test{
 		//main de base |	mainDeBase();
 
 		//affiche la duree d'execution en millisecondes
-		System.out.println(System.currentTimeMillis()-debut);
 	}
 
 	//test les 1Millions de possibilité pour le graphe G1 avec un algorithme donne
 	public static void mainAlgo1Million(Algorithme algo,Graph graph1){
+		long debut = System.currentTimeMillis();
 		HashMap<Graph, Integer> graphes = new HashMap<Graph, Integer>();
 
 		for(int i=0; i<1000000; i++) {
@@ -237,6 +237,7 @@ public class Test{
 			System.out.println(num + " : " + entryGraphes.getValue());
 			num++;
 		}
+		System.out.println(System.currentTimeMillis()-debut);
 	}
 
 
