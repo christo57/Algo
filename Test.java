@@ -221,34 +221,36 @@ public class Test{
 
 	//test de base
 	public static void mainLabyrinthe(Algorithme al) {
+		long debut = System.currentTimeMillis();
 		int totImp = 0;
 		int totDist = 0;
 
 		//teste moyenne avec 1000 juste affichage resultat console
 
-		//		for(int i=0;i<1000;i++) {
-		//			Labyrinthe l = new Labyrinthe(al);
-		//			l.chercheSortie();
-		//			totImp+=l.getImpasses();
-		//			totDist += l.getDistance();
-		//		}
-		//		System.out.println(al.name());
-		//		System.out.println("impasses moyennes :"+totImp/1000);
-		//		System.out.println("distances moyennes :"+totDist/1000);
-		//		System.out.println();
-
+				for(int i=0;i<1000;i++) {
+					Labyrinthe l = new Labyrinthe(al);
+					l.chercheSortie();
+					totImp+=l.getImpasses();
+					totDist += l.getDistance();
+				}
+				System.out.println(al.name());
+				System.out.println("impasses moyennes :"+totImp/1000);
+				System.out.println("distances moyennes :"+totDist/1000);
+				System.out.println();
+				System.out.println("temps en millisecondes de l'execution : " + (System.currentTimeMillis()-debut));
+				System.out.println();
 		//		normal
-		Labyrinthe l = new Labyrinthe(al);
-		l.chercheSortie();
-		totImp+=l.getImpasses();
-		totDist += l.getDistance();
-		String titre = "graphe";
-		Display display1 = new Display(titre);
-		display1.setImage(l.toImage());
-		System.out.println(al.name());
-		System.out.println("impasses :"+totImp);
-		System.out.println("distance :"+totDist);
-		System.out.println();
-		printLaby(l.getBase(), l.getSize(), titre+".tex");
+//		Labyrinthe l = new Labyrinthe(al);
+//		l.chercheSortie();
+//		totImp+=l.getImpasses();
+//		totDist += l.getDistance();
+//		String titre = "graphe";
+//		Display display1 = new Display(titre);
+//		display1.setImage(l.toImage());
+//		System.out.println(al.name());
+//		System.out.println("impasses :"+totImp);
+//		System.out.println("distance :"+totDist);
+//		System.out.println();
+//		printLaby(l.getBase(), l.getSize(), titre+".tex");
 	}
 } 

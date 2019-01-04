@@ -15,7 +15,7 @@ public class Labyrinthe {
 
 
 	public Labyrinthe(Algorithme al) {
-		this.size = 10;
+		this.size = 20;
 		this.base = al.executer(Graph.G2(this.size));
 		for(Edge e : base.edges()) {
 			if(!e.isUsed())
@@ -35,7 +35,7 @@ public class Labyrinthe {
 
 	public void chercheSortie() {
 		boolean b = false;
-		for(int i=0;i<this.base.getV();i++) { //boucle qui supprime les impasses
+		for(int i=0;i<this.base.getV();i++) { //boucle qui supprime les premieres impasses et les compte
 			if(base.adj(i).size()==1){
 				if( i!=base.getEntree() && i!=base.getSortie() ){
 					tmp.add(base.adj(i).get(0));
@@ -52,9 +52,7 @@ public class Labyrinthe {
 						b=false;
 					}
 				}
-			}
-			
-			
+			}			
 			
 			for(int i=0;i<this.base.getV();i++) { //boucle qui supprime les impasses
 				if(base.adj(i).size()==1){
