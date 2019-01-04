@@ -47,7 +47,7 @@ public class AlgorithmeWilson implements Algorithme{
 			ArrayList<Edge> marcheAleatoire = this.marcheAleatoire(g);
 
 			//on supprime les doublons
-			marcheAleatoire = this.supprimerDoublons(marcheAleatoire);
+			marcheAleatoire = this.supprimerDoublons(marcheAleatoire,sommetDeDepart);
 
 			for (Edge edge : marcheAleatoire) {
 				if(!visites.contains(edge.getFrom())) visites.add(edge.getFrom());
@@ -58,22 +58,74 @@ public class AlgorithmeWilson implements Algorithme{
 		return resultat;
 	}
 
-	private ArrayList<Edge> supprimerDoublons(ArrayList<Edge> marcheAleatoire){
+	//methode qui supprime tous les doublons
+	private ArrayList<Edge> supprimerDoublons(ArrayList<Edge> marcheAleatoire, int sommetDepart){
+
+		//creation de la liste
+		ArrayList<Integer> liste = new ArrayList<Integer>();
+		liste.add(this.sommetNonVisite);
 		for (Edge edge : marcheAleatoire) {
-			for(int i = marcheAleatoire.size()-1; i>marcheAleatoire.indexOf(edge); i--) {
-				if(marcheAleatoire.get(i) == edge) {
-					for(int j = marcheAleatoire.indexOf(edge); j<=i; j++) {
-						marcheAleatoire.remove(marcheAleatoire.get(j));
-					}
+			if(edge.getFrom() == liste.get(liste.size()-1)) liste.add(edge.getTo());
+			else liste.add(edge.getFrom());
+		}
+
+		//suppression des doublons
+		int doublon = this.getDoublon(liste);
+		while(doublon != -1) {
+			ArrayList<Integer> nouvelleListe = new ArrayList<Integer>();
+			boolean trouverPremierDoublon = false;
+			boolean trouverSecondDoublon = false;
+			for (Integer elem : liste) {
+				if(!trouverPremierDoublon) {
+					if(elem == doublon) trouverPremierDoublon = true;
+					nouvelleListe.add(elem);
+				}
+				else if(trouverPremierDoublon && !trouverSecondDoublon) {
+					if(elem == doublon) trouverSecondDoublon = true;
+				}
+				else {
+					nouvelleListe.add(elem);
 				}
 			}
-		}	
-		return marcheAleatoire;
+			liste = nouvelleListe;
+
+			doublon = this.getDoublon(liste);
+		}
+
+		//reconstruction des aretes
+		ArrayList<Edge> sansDoublons = new ArrayList<Edge>();
+		for(int i=0; i < liste.size()-1; i++) {
+			int from = liste.get(i);
+			int to = liste.get(i+1);
+			
+			for (Edge edge : marcheAleatoire) {
+				if((edge.getFrom() == from && edge.getTo() == to) ||
+						(edge.getFrom() == to && edge.getTo() == from)) {
+					sansDoublons.add(edge);
+					break;
+				}
+			}
+		}
+		
+		return sansDoublons;
+	}
+
+	//retourne le premier doublons de la liste, -1 si aucun doublon
+	private int getDoublon(ArrayList<Integer> liste) {
+		for(int i=0; i<liste.size()-1; i++) {
+			int elem = liste.get(i);
+			for(int j = liste.size()-1; j>i; j--) {
+				if(liste.get(j) == elem) return elem;
+			}
+		}
+
+		return -1;
 	}
 
 	//methode qui execute la marche aleatoire depuis le sommet non visite
 	private ArrayList<Edge> marcheAleatoire(Graph g){
 		ArrayList<Edge> marcheAleatoire = new ArrayList<Edge>();
+		int sommetActuel = sommetNonVisite;
 
 		//dernier element de la liste de la marche aleatoire
 		Edge lastElem;
@@ -83,7 +135,7 @@ public class AlgorithmeWilson implements Algorithme{
 		//on continue jusqu'a tombe sur un sommet deja visite
 		while(marcheAleatoire.size() == 0 || !containVisite) {
 
-			ArrayList<Edge> edgesSommet = g.getAdj()[sommetNonVisite];
+			ArrayList<Edge> edgesSommet = g.getAdj()[sommetActuel];
 			int edgeAleatoire = (int) (Math.random() * edgesSommet.size());
 			Edge aleatoire = edgesSommet.get(edgeAleatoire);
 
@@ -95,8 +147,8 @@ public class AlgorithmeWilson implements Algorithme{
 			containVisite = visites.contains(lastElem.getFrom()) || visites.contains(lastElem.getTo());
 
 			//mise a jour du prochain sommet a visite
-			if(sommetNonVisite == lastElem.getFrom()) sommetNonVisite = lastElem.getTo();
-			else sommetNonVisite = lastElem.getFrom();
+			if(sommetActuel == lastElem.getFrom()) sommetActuel = lastElem.getTo();
+			else sommetActuel = lastElem.getFrom();
 		}
 		return marcheAleatoire;
 	}

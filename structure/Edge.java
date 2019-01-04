@@ -5,7 +5,7 @@ public class Edge{
 	private int to;
 	private boolean used;
 	
-	Edge(int x, int y){
+	public Edge(int x, int y){
 		this.from = x;
 		this.to = y;
 		this.used = false;
