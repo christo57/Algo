@@ -1,11 +1,6 @@
 package algorithmes;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-
-import structure.Edge;
 import structure.Graph;
 
 public class Labyrinthe {

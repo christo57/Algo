@@ -121,7 +121,7 @@ public class Test{
 
 	//methode lancer par le programme
 	public static void main(String[] args) {
-		
+		int occurence = 1000000;
 		Graph graph1 = Graph.G1();
 		Display display1 = new Display("graphe");
 		display1.setImage(graph1.toImage());
@@ -131,7 +131,7 @@ public class Test{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainAlgo1Million(new AlgorithmeKruskal(), graph1);
+				mainAlgo1Million(new AlgorithmeKruskal(), graph1, occurence);
 
 			}
 		});
@@ -140,7 +140,7 @@ public class Test{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainAlgo1Million(new AlgorithmeAldousBroder(), graph1);				
+				mainAlgo1Million(new AlgorithmeAldousBroder(), graph1, occurence);				
 			}
 		});
 		JButton wil = new JButton("Algorithme de Wilson");
@@ -148,7 +148,7 @@ public class Test{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainAlgo1Million(new AlgorithmeKruskal(), graph1);				
+				mainAlgo1Million(new AlgorithmeWilson(), graph1, occurence);				
 			}
 		});
 
@@ -178,24 +178,16 @@ public class Test{
 		choix.add(pane);
 		choix.pack();
 		choix.setVisible(true);
-		//Q6 |		mainAlgo1Million(new AlgorithmeWilson(), graph1);
-
-		//Q5 |		mainAlgo1Million(new AlgorithmeAldousBroder(), graph1);
-
-		//Q4 |		mainAlgo1Million(new AlgorithmeKruskal(), graph1);
-
-
-		//main de base |	mainDeBase();
-
-		//affiche la duree d'execution en millisecondes
 	}
 
+
 	//test les 1Millions de possibilité pour le graphe G1 avec un algorithme donne
-	public static void mainAlgo1Million(Algorithme algo,Graph graph1){
+	public static void mainAlgo1Million(Algorithme algo,Graph graph1,int occurence){
+		System.out.println("execution de l'algorithme "+ algo.name() + " sur " + occurence + " occurence :");
 		long debut = System.currentTimeMillis();
 		HashMap<Graph, Integer> graphes = new HashMap<Graph, Integer>();
 
-		for(int i=0; i<1000000; i++) {
+		for(int i=0; i<occurence; i++) {
 			//System.out.println(i);
 			Graph graph2 = algo.executer(graph1);
 			boolean sameGraph = false;
@@ -234,10 +226,12 @@ public class Test{
 			Graph g = entryGraphes.getKey();
 			Display d = new Display(String.valueOf(num));
 			d.setImage(g.toImage());
-			System.out.println(num + " : " + entryGraphes.getValue());
+			System.out.println("grpahe " + num + " : " + entryGraphes.getValue() + " occurences");
 			num++;
 		}
-		System.out.println(System.currentTimeMillis()-debut);
+		//affiche la duree d'execution en millisecondes
+		System.out.println("temps en millsecondes de l'execution : " + (System.currentTimeMillis()-debut));
+		System.out.println();
 	}
 
 

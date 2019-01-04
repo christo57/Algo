@@ -55,4 +55,9 @@ public class AlgorithmeAldousBroder implements Algorithme{
 
 		return resultat;
 	}
+
+	//le nom de l'algorithme
+	public String name() {
+		return "Aldous-Broder";
+	}
 }

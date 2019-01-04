@@ -1,26 +1,24 @@
 package algorithmes;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 import structure.Edge;
 import structure.Graph;
 
 public class AlgorithmeWilson implements Algorithme{
 
 	//sommet de depart de l'algorithme
-	private int sommetDeDepart;
+	private int sommetDeDepartInit;
 	//sommet pas encore visite
 	private int sommetNonVisite;
 	//list de sommet deja visite
 	ArrayList<Integer> visites;
 
 	public AlgorithmeWilson(int sommet) {
-		this.sommetDeDepart = sommet;
+		this.sommetDeDepartInit = sommet;
 	}
 
 	public AlgorithmeWilson(){
-		this.sommetDeDepart = -1;
+		this.sommetDeDepartInit = -1;
 	}
 
 	public Graph executer(Graph g) {
@@ -32,26 +30,34 @@ public class AlgorithmeWilson implements Algorithme{
 		visites = new ArrayList<Integer>();
 
 		//au depart, on visite un sommet
+		int sommetDeDepart = sommetDeDepartInit;
 		if(sommetDeDepart == -1) {
 			sommetDeDepart = (int) (Math.random() * g.getV());
-			visites.add(sommetDeDepart);
 		}
+		visites.add(sommetDeDepart);
 
-		//on choisi un sommet non visite
-		sommetNonVisite = (int) (Math.random() * g.getV());
-		while(visites.contains(sommetNonVisite)) {
+		while(visites.size() != g.getV()) {
+			//on choisi un sommet non visite
 			sommetNonVisite = (int) (Math.random() * g.getV());
+			while(visites.contains(sommetNonVisite)) {
+				sommetNonVisite = (int) (Math.random() * g.getV());
+			}
+
+			//on effectue une marche aleatoire juqu'a un sommet deja visite
+			ArrayList<Edge> marcheAleatoire = this.marcheAleatoire(g);
+
+			//on supprime les doublons
+			marcheAleatoire = this.supprimerDoublons(marcheAleatoire);
+
+			for (Edge edge : marcheAleatoire) {
+				if(!visites.contains(edge.getFrom())) visites.add(edge.getFrom());
+				if(!visites.contains(edge.getTo())) visites.add(edge.getTo());
+				resultat.addEdge(edge);
+			}
 		}
-
-		//on effectue une marche aleatoire juqu'a un sommet deja visite
-		ArrayList<Edge> marcheAleatoire = this.marcheAleatoire(g);
-
-		marcheAleatoire = this.supprimerDoublons(marcheAleatoire);
-
-
-		return null;
+		return resultat;
 	}
-	
+
 	private ArrayList<Edge> supprimerDoublons(ArrayList<Edge> marcheAleatoire){
 		for (Edge edge : marcheAleatoire) {
 			for(int i = marcheAleatoire.size()-1; i>marcheAleatoire.indexOf(edge); i--) {
@@ -93,5 +99,10 @@ public class AlgorithmeWilson implements Algorithme{
 			else sommetNonVisite = lastElem.getFrom();
 		}
 		return marcheAleatoire;
+	}
+
+	//le nom de l'algorithme
+	public String name() {
+		return "Wilson";
 	}
 }
