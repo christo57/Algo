@@ -20,6 +20,12 @@ public class Labyrinthe {
 		return base.toLabyrinthe();
 	}
 	
+	public int chercheSortie() {
+		int compteur = 0;
+		
+		return compteur;
+	}
+	
 	
 	
 	

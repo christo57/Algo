@@ -100,7 +100,7 @@ public class Graph{
 	}
 	
 	public static Graph G2() {
-		return Grid(20);
+		return Grid(5);
 	}
 
 	static Graph Grid(int n){
