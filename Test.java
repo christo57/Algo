@@ -178,16 +178,8 @@ public class Test{
 		choix.add(pane);
 		choix.pack();
 		choix.setVisible(true);
-		//Q6 |		mainAlgo1Million(new AlgorithmeWilson(), graph1);
-
-		//Q5 |		mainAlgo1Million(new AlgorithmeAldousBroder(), graph1);
-
-		//Q4 |		mainAlgo1Million(new AlgorithmeKruskal(), graph1);
-
-
-		//main de base |	mainDeBase();
-
 	}
+
 
 	//test les 1Millions de possibilité pour le graphe G1 avec un algorithme donne
 	public static void mainAlgo1Million(Algorithme algo,Graph graph1,int occurence){
@@ -237,8 +229,6 @@ public class Test{
 			System.out.println("grpahe " + num + " : " + entryGraphes.getValue() + " occurences");
 			num++;
 		}
-		
-
 		//affiche la duree d'execution en millisecondes
 		System.out.println("temps en millsecondes de l'execution : " + (System.currentTimeMillis()-debut));
 		System.out.println();
