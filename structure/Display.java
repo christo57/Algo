@@ -12,7 +12,6 @@ public class Display extends JFrame {
 		super(titre);       // Titre de la fenêtre
 		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		int height = (int)dimension.getHeight();
-		int width  = (int)dimension.getWidth();
 		setPreferredSize(new Dimension(height, 1100));  // largeur, hauteur
 
 		jlabel = new JLabel();

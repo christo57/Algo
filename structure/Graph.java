@@ -14,7 +14,7 @@ public class Graph{
 
 	@SuppressWarnings("unchecked")
 	public Graph(int N){
-		this.V = N;
+		Graph.V = N;
 		this.E = 0;
 		adj = (ArrayList<Edge>[]) new ArrayList[N];
 		for (int v= 0; v < N; v++)

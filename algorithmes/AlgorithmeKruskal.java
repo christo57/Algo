@@ -63,4 +63,9 @@ public class AlgorithmeKruskal implements Algorithme{
 		}
 		return aleatoire;
 	}
+	
+	//le nom de l'algorithme
+	public String name() {
+		return "Kruskal";
+	}
 }
