@@ -15,6 +15,10 @@ public class Edge{
 		if (this.from == v) return this.to; else return this.from;
 	}
 	
+	public boolean equals(Edge e) {
+		return ( (this.from==e.getFrom() && this.to==e.getTo()) );
+	}
+	
 	//getter and setter
 
 	public int getFrom() {
