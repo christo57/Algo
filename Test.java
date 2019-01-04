@@ -118,7 +118,7 @@ public class Test{
 			}                                             
 		}    
 	}	
-	
+
 	//methode lancer par le programme
 	public static void main(String[] args) {
 		long debut = System.currentTimeMillis();
@@ -128,16 +128,16 @@ public class Test{
 		JFrame choix = new JFrame("Choix");
 		JButton krusk = new JButton("Algorithme de Kruskal");
 		krusk.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainAlgo1Million(new AlgorithmeKruskal(), graph1);
-				
+
 			}
 		});
 		JButton ald = new JButton("Algorithme d'Aldous-Broder");
 		ald.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainAlgo1Million(new AlgorithmeAldousBroder(), graph1);				
@@ -145,16 +145,16 @@ public class Test{
 		});
 		JButton wil = new JButton("Algorithme de Wilson");
 		wil.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainAlgo1Million(new AlgorithmeKruskal(), graph1);				
 			}
 		});
-		
+
 		JButton labWil = new JButton("Creation Labyrinthe avec algorithme d'Aldous-Broder");
 		labWil.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainLabyrinthe(new AlgorithmeAldousBroder());
@@ -162,11 +162,11 @@ public class Test{
 		});
 		JButton labKrusk = new JButton("Creation Labyrinthe avec algorithme de Kruskal");
 		labKrusk.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainLabyrinthe(new AlgorithmeKruskal());
-				
+
 			}
 		});
 		JPanel pane = new JPanel();
@@ -179,24 +179,22 @@ public class Test{
 		choix.pack();
 		choix.setVisible(true);
 		//Q6 |		mainAlgo1Million(new AlgorithmeWilson(), graph1);
-		
+
 		//Q5 |		mainAlgo1Million(new AlgorithmeAldousBroder(), graph1);
-		
+
 		//Q4 |		mainAlgo1Million(new AlgorithmeKruskal(), graph1);
-		
-		
+
+
 		//main de base |	mainDeBase();
-		
+
 		//affiche la duree d'execution en millisecondes
 		System.out.println(System.currentTimeMillis()-debut);
 	}
 
 	//test les 1Millions de possibilité pour le graphe G1 avec un algorithme donne
-	public static void mainAlgo1Million(Algorithme algo,Graph graph1) {
-	
-
+	public static void mainAlgo1Million(Algorithme algo,Graph graph1){
 		HashMap<Graph, Integer> graphes = new HashMap<Graph, Integer>();
-		
+
 		for(int i=0; i<1000000; i++) {
 			//System.out.println(i);
 			Graph graph2 = algo.executer(graph1);
@@ -204,7 +202,7 @@ public class Test{
 
 			for (Map.Entry<Graph, Integer> entryGraphes : graphes.entrySet()) {
 				Graph graph = entryGraphes.getKey();
-				
+
 				HashMap<Edge, Boolean> edges = new HashMap<Edge, Boolean>();
 
 				//creation de la hashmap
@@ -215,20 +213,20 @@ public class Test{
 				//comparaison entre les 2 graphes
 				for (Edge edge : graph2.edges()) {
 					for (Map.Entry<Edge, Boolean> entry : edges.entrySet()) {
-					    if(edge.getFrom() == entry.getKey().getFrom() &&
-					    		edge.getTo() == entry.getKey().getTo()) {
-					    	entry.setValue(true);
-					    }
+						if(edge.getFrom() == entry.getKey().getFrom() &&
+								edge.getTo() == entry.getKey().getTo()) {
+							entry.setValue(true);
+						}
 					}
 				}
-				
+
 				if(!edges.containsValue(false)) {
 					sameGraph = true;
 					graphes.put(graph, graphes.get(graph) + 1);
 					break;
 				}
 			}
-			if(!sameGraph) graphes.put(graph2, 1);
+			if(!sameGraph)	graphes.put(graph2, 1);
 		}
 
 		int num = 1;
@@ -242,11 +240,12 @@ public class Test{
 	}
 
 
+
 	//test de base
 	public static void mainLabyrinthe(Algorithme al) {
 		Labyrinthe l = new Labyrinthe(al);
 		Display display1 = new Display("graphe");
 		display1.setImage(l.toImage());
-		
+
 	}
 } 
