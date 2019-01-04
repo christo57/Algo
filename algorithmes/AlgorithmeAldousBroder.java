@@ -7,14 +7,14 @@ import structure.Graph;
 
 public class AlgorithmeAldousBroder implements Algorithme{
 	
-	private int sommetDeDepart;
+	private int sommetDeDepartInit;
 	
 	public AlgorithmeAldousBroder(int sommet) {
-		this.sommetDeDepart = sommet;
+		this.sommetDeDepartInit = sommet;
 	}
 	
 	public AlgorithmeAldousBroder(){
-		this.sommetDeDepart = -1;
+		this.sommetDeDepartInit = -1;
 	}
 
 	public Graph executer(Graph g) {
@@ -26,10 +26,11 @@ public class AlgorithmeAldousBroder implements Algorithme{
 		ArrayList<Integer> visites = new ArrayList<Integer>();
 
 		//sommet de depart aleatoire si sommetDeDepart n'est pas parametre
+		int sommetDeDepart = sommetDeDepartInit;
 		if(sommetDeDepart == -1) {
 			sommetDeDepart = (int) (Math.random() * g.getV());
-			visites.add(sommetDeDepart);
 		}
+		visites.add(sommetDeDepart);
 
 
 		while(visites.size() != g.getV()) {
@@ -39,6 +40,8 @@ public class AlgorithmeAldousBroder implements Algorithme{
 			Edge aleatoire = edgesSommet.get(edgeAleatoire);
 
 			//si sommet pas visite, ajout de l'arete
+			if(aleatoire.getTo() == sommetDeDepart && aleatoire.getFrom() == sommetDeDepart) System.out.println("tous egaux");
+			if(aleatoire.getTo() != sommetDeDepart && aleatoire.getFrom() != sommetDeDepart) System.out.println("tous different");
 			int autreSommet = aleatoire.getTo();
 			if(autreSommet == sommetDeDepart) autreSommet = aleatoire.getFrom();
 			
@@ -49,7 +52,7 @@ public class AlgorithmeAldousBroder implements Algorithme{
 
 			sommetDeDepart = autreSommet;
 		}
-		
+
 		return resultat;
 	}
 }
