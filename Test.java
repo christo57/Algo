@@ -241,15 +241,13 @@ public class Test{
 		int totImp = 0;
 		int totDist = 0;
 
-		//teste moyenne avec 1000
+		//teste moyenne avec 1000 juste affichage resultat console
 
 		//		for(int i=0;i<1000;i++) {
 		//			Labyrinthe l = new Labyrinthe(al);
 		//			l.chercheSortie();
 		//			totImp+=l.getImpasses();
 		//			totDist += l.getDistance();
-		//			Display display1 = new Display("graphe");
-		//			display1.setImage(l.toImage());
 		//		}
 		//		System.out.println(al.name());
 		//		System.out.println("impasses moyennes :"+totImp/1000);

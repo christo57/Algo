@@ -5,7 +5,7 @@ public class Edge{
 	private int to;
 	private boolean used;
 	
-	Edge(int x, int y){
+	public Edge(int x, int y){
 		this.from = x;
 		this.to = y;
 		this.used = false;
@@ -13,10 +13,6 @@ public class Edge{
 
 	public final int other(int v){
 		if (this.from == v) return this.to; else return this.from;
-	}
-	
-	public boolean equals(Edge e) {
-		return ( (this.from==e.getFrom() && this.to==e.getTo()) );
 	}
 	
 	//getter and setter
