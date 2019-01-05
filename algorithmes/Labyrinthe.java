@@ -48,33 +48,33 @@ public class Labyrinthe {
 					}
 				}
 			}
-			
-			
-			
+
+
+
 			for(int i=0;i<this.base.getV();i++) { //boucle qui supprime les impasses
 				if(base.adj(i).size()==1){
 					if( i!=base.getEntree() && i!=base.getSortie() ){
 						tmp.add(base.adj(i).get(0));
 						base.supprimerEdge(base.adj(i).get(0));
-						
+
 					}
 				}
 			}
 		}
-		
+
 		for(Edge e : base.edges()) {
 			distance++;
 			e.setUsed(true);
 		}
-		
-			for(Edge e : tmp) {
-				
-					base.addEdge(e);
-			}
+
+		for(Edge e : tmp) {
+
+			base.addEdge(e);
+		}
 	}
 
 	//getters and setters
-	
+
 	public Graph getBase() {
 		return base;
 	}
@@ -94,7 +94,7 @@ public class Labyrinthe {
 	public int getImpasses() {
 		return impasses;
 	}
-	
+
 	public int getDistance() {
 		return distance;
 	}

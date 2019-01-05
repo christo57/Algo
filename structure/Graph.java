@@ -8,7 +8,7 @@ public class Graph{
 	private ArrayList<Edge>[] adj;
 	private int[] coordX;
 	private int[] coordY;
-	private static int V;
+	private int V;
 	private int E;
 	public static final int TAILLE = 30;
 	private int sortie;
@@ -16,7 +16,7 @@ public class Graph{
 	
 	@SuppressWarnings("unchecked")
 	public Graph(int N){
-		Graph.V = N;
+		this.V = N;
 		this.E = 0;
 		adj = (ArrayList<Edge>[]) new ArrayList[N];
 		for (int v= 0; v < N; v++)
