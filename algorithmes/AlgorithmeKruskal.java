@@ -11,7 +11,7 @@ public class AlgorithmeKruskal implements Algorithme{
 
 	//retourne le graphe de l'algorithme de kruskal
 	public Graph executer(Graph g) {
-		Graph res = Graph.G1();
+		Graph res = g.copier();
 
 		ArrayList<Edge> aleatoire = this.edgesAleatoire(res);
 		

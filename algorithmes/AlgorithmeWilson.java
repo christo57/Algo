@@ -22,7 +22,7 @@ public class AlgorithmeWilson implements Algorithme{
 	}
 
 	public Graph executer(Graph g) {
-		Graph res = Graph.G1();
+		Graph res = g.copier();
 
 		visites = new ArrayList<Integer>();
 

@@ -205,6 +205,17 @@ public class Graph{
 		}                                             
 	}
 	
+	public Graph copier() {
+		Graph res = new Graph(V);
+		for (int i=0; i < this.coordX.length; i++) {
+			res.setCoordinate(i, this.coordX[i],  this.coordY[i]);
+		}
+		for (Edge e : this.edges()) {
+			res.addEdge(new Edge(e.getFrom(),e.getTo()));
+		}
+		return res;
+	}
+	
 	public boolean equals(Graph g) {
 		for (Edge eG : g.edges()) {
 			boolean edgeEqual = false;

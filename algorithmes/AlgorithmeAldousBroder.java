@@ -18,7 +18,7 @@ public class AlgorithmeAldousBroder implements Algorithme{
 	}
 
 	public Graph executer(Graph g) {
-		Graph res = Graph.G1();
+		Graph res = g.copier();
 		
 		ArrayList<Integer> visites = new ArrayList<Integer>();
 
