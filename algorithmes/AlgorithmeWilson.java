@@ -22,29 +22,26 @@ public class AlgorithmeWilson implements Algorithme{
 	}
 
 	public Graph executer(Graph g) {
-		Graph resultat = new Graph(g.getV());
-		for (int i=0; i < g.getCoordX().length; i++) {
-			resultat.setCoordinate(i, g.getCoordX()[i],  g.getCoordY()[i]);
-		}
+		Graph res = Graph.G1();
 
 		visites = new ArrayList<Integer>();
 
 		//au depart, on visite un sommet
 		int sommetDeDepart = sommetDeDepartInit;
 		if(sommetDeDepart == -1) {
-			sommetDeDepart = (int) (Math.random() * g.getV());
+			sommetDeDepart = (int) (Math.random() * res.getV());
 		}
 		visites.add(sommetDeDepart);
 
-		while(visites.size() != g.getV()) {
+		while(visites.size() != res.getV()) {
 			//on choisi un sommet non visite
-			sommetNonVisite = (int) (Math.random() * g.getV());
+			sommetNonVisite = (int) (Math.random() * res.getV());
 			while(visites.contains(sommetNonVisite)) {
-				sommetNonVisite = (int) (Math.random() * g.getV());
+				sommetNonVisite = (int) (Math.random() * res.getV());
 			}
 
 			//on effectue une marche aleatoire juqu'a un sommet deja visite
-			ArrayList<Edge> marcheAleatoire = this.marcheAleatoire(g);
+			ArrayList<Edge> marcheAleatoire = this.marcheAleatoire(res);
 
 			//on supprime les doublons
 			marcheAleatoire = this.supprimerDoublons(marcheAleatoire,sommetDeDepart);
@@ -52,10 +49,10 @@ public class AlgorithmeWilson implements Algorithme{
 			for (Edge edge : marcheAleatoire) {
 				if(!visites.contains(edge.getFrom())) visites.add(edge.getFrom());
 				if(!visites.contains(edge.getTo())) visites.add(edge.getTo());
-				resultat.addEdge(edge);
+				edge.setUsed(true);
 			}
 		}
-		return resultat;
+		return res;
 	}
 
 	//methode qui supprime tous les doublons

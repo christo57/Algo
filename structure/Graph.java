@@ -99,8 +99,8 @@ public class Graph{
 		return g;
 	}
 	
-	public static Graph G2() {
-		return Grid(20);
+	public static Graph G2(int size) {
+		return Grid(size);
 	}
 
 	static Graph Grid(int n){
@@ -203,6 +203,21 @@ public class Graph{
 		}
 		catch (IOException e){
 		}                                             
+	}
+	
+	public boolean equals(Graph g) {
+		for (Edge eG : g.edges()) {
+			boolean edgeEqual = false;
+			for (Edge eThis : this.edges()) {
+				if(((eG.getFrom() == eThis.getFrom() && eG.getTo() == eThis.getTo()) || 
+						(eG.getFrom() == eThis.getTo() && eG.getTo() == eThis.getFrom())) &&
+						eG.isUsed() == eThis.isUsed()) {
+					edgeEqual = true;
+				}
+			}
+			if(!edgeEqual) return false;
+		}
+		return true;
 	}
 	
 	

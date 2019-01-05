@@ -187,38 +187,21 @@ public class Test{
 		long debut = System.currentTimeMillis();
 		HashMap<Graph, Integer> graphes = new HashMap<Graph, Integer>();
 
-		for(int i=0; i<occurence; i++) {
+		for(int i=0; i<1000000; i++) {
 			//System.out.println(i);
 			Graph graph2 = algo.executer(graph1);
 			boolean sameGraph = false;
 
-			for (Map.Entry<Graph, Integer> entryGraphes : graphes.entrySet()) {
-				Graph graph = entryGraphes.getKey();
-
-				HashMap<Edge, Boolean> edges = new HashMap<Edge, Boolean>();
-
-				//creation de la hashmap
-				for (Edge edge : graph.edges()) {
-					edges.put(edge, false);
-				}
-
-				//comparaison entre les 2 graphes
-				for (Edge edge : graph2.edges()) {
-					for (Map.Entry<Edge, Boolean> entry : edges.entrySet()) {
-						if(edge.getFrom() == entry.getKey().getFrom() &&
-								edge.getTo() == entry.getKey().getTo()) {
-							entry.setValue(true);
-						}
-					}
-				}
-
-				if(!edges.containsValue(false)) {
+			for (Graph g : graphes.keySet()) {
+				if(g.equals(graph2)) {
 					sameGraph = true;
-					graphes.put(graph, graphes.get(graph) + 1);
+					graphes.put(g, graphes.get(g) + 1);
 					break;
 				}
 			}
+
 			if(!sameGraph)	graphes.put(graph2, 1);
+
 		}
 
 		int num = 1;
@@ -239,8 +222,10 @@ public class Test{
 	//test de base
 	public static void mainLabyrinthe(Algorithme al) {
 		Labyrinthe l = new Labyrinthe(al);
-		Display display1 = new Display("graphe");
+		String titre = "graphe";
+		Display display1 = new Display(titre);
 		display1.setImage(l.toImage());
+		printLaby(l.getBase(), l.getSize(), titre+".tex");
 
 	}
 } 

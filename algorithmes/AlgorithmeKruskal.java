@@ -11,19 +11,16 @@ public class AlgorithmeKruskal implements Algorithme{
 
 	//retourne le graphe de l'algorithme de kruskal
 	public Graph executer(Graph g) {
-		Graph graph = new Graph(g.getV());
-		for (int i=0; i < g.getCoordX().length; i++) {
-			graph.setCoordinate(i, g.getCoordX()[i],  g.getCoordY()[i]);
-		}
+		Graph res = Graph.G1();
 
-		ArrayList<Edge> aleatoire = this.edgesAleatoire(g);
+		ArrayList<Edge> aleatoire = this.edgesAleatoire(res);
 		
 		/**key = numero de sommet
 		 * value = partie du graphe
 		**/
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 		int i = 0;
-		while(i<=g.getV()) {
+		while(i<=res.getV()) {
 			map.put(i, i);
 			i++;
 		}
@@ -33,7 +30,7 @@ public class AlgorithmeKruskal implements Algorithme{
 			int valueTo = map.get(edge.getTo());
 			
 			if(valueFrom != valueTo) {
-				graph.addEdge(edge);
+				edge.setUsed(true);
 				
 				for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
 				    if(entry.getValue() == valueTo) entry.setValue(valueFrom);
@@ -41,7 +38,7 @@ public class AlgorithmeKruskal implements Algorithme{
 			}
 		}
 
-		return graph;
+		return res;
 	}
 	
 	//retourne une liste d'arete aleatoire
