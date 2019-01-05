@@ -11,7 +11,9 @@ public class Graph{
 	private static int V;
 	private int E;
 	public static final int TAILLE = 30;
-
+	private int sortie;
+	private int entree;
+	
 	@SuppressWarnings("unchecked")
 	public Graph(int N){
 		Graph.V = N;
@@ -25,6 +27,11 @@ public class Graph{
 			coordX[v] = 0;
 		for (int v= 0; v < N; v++)
 			coordY[v] = 0;
+	}
+	
+	public Graph clone() {
+		Graph res = new Graph(V);
+		return res;
 	}
 
 	public int vertices(){
@@ -42,6 +49,13 @@ public class Graph{
 		int w = e.getTo();
 		adj[v].add(e);
 		adj[w].add(e);
+	}
+	
+	public void supprimerEdge(Edge e) {
+		int v = e.getFrom();
+		int w = e.getTo();
+		adj[v].remove(e);
+		adj[w].remove(e);
 	}
 
 	public ArrayList<Edge> adj(int v){
@@ -182,8 +196,7 @@ public class Graph{
 			if(i==0) {
 				g2d.setColor(Color.WHITE);
 				g2d.drawString("Entree", coordX[i]-TAILLE/2, coordY[i]);
-			}
-			if(i==V-1) {
+			}else if(i==V-1) {
 				g2d.setColor(Color.WHITE);
 				g2d.drawString("Sortie", coordX[i]-TAILLE/2, coordY[i]);
 			}
@@ -270,4 +283,20 @@ public class Graph{
 	public int getV() {
 		return V;
 	} 
+	
+	public int getSortie() {
+		return this.sortie;
+	}
+	
+	public void setSortie(int i) {
+		this.sortie = i;
+	}
+	
+	public int getEntree() {
+		return this.entree;
+	}
+	
+	public void setEntree(int i) {
+		this.entree = i;
+	}
 }
