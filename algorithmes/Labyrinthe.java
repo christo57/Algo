@@ -15,8 +15,13 @@ public class Labyrinthe {
 
 
 	public Labyrinthe(Algorithme al) {
-		this.size = 20;
+		this.size = 10;
 		this.base = al.executer(Graph.G2(this.size));
+		for(Edge e : base.edges()) {
+			if(!e.isUsed())
+			base.supprimerEdge(e);
+			e.setUsed(false);
+		}
 		this.tmp = new ArrayList<Edge>();
 		distance = 0;
 		impasses = 0;
