@@ -15,11 +15,11 @@ public class Labyrinthe {
 
 
 	public Labyrinthe(Algorithme al) {
-		this.size = 10;
+		this.size = 20;
 		this.base = al.executer(Graph.G2(this.size));
-		for(Edge e : base.edges()) {
+		for(Edge e : base.edges()) { //on selectionne seulement les arrete de l'arbre couvrant et on met used a false
 			if(!e.isUsed())
-			base.supprimerEdge(e);
+				base.supprimerEdge(e);
 			e.setUsed(false);
 		}
 		this.tmp = new ArrayList<Edge>();
@@ -35,7 +35,7 @@ public class Labyrinthe {
 
 	public void chercheSortie() {
 		boolean b = false;
-		for(int i=0;i<this.base.getV();i++) { //boucle qui supprime les impasses
+		for(int i=0;i<this.base.getV();i++) { //boucle qui supprime les premieres impasses et les compte
 			if(base.adj(i).size()==1){
 				if( i!=base.getEntree() && i!=base.getSortie() ){
 					tmp.add(base.adj(i).get(0));
@@ -52,9 +52,8 @@ public class Labyrinthe {
 						b=false;
 					}
 				}
-			}
 
-
+			}						
 
 			for(int i=0;i<this.base.getV();i++) { //boucle qui supprime les impasses
 				if(base.adj(i).size()==1){
@@ -67,40 +66,39 @@ public class Labyrinthe {
 			}
 		}
 
-		for(Edge e : base.edges()) {
-			distance++;
-			e.setUsed(true);
+			for(Edge e : base.edges()) {//on marque le chemin de l'entree vers la sortie en true
+				distance++;
+				e.setUsed(true);
+			}
+
+			for(Edge e : tmp) {	//on remet toutes les arretes
+				base.addEdge(e);
+			}
 		}
 
-		for(Edge e : tmp) {
+		//getters and setters
 
-			base.addEdge(e);
+		public Graph getBase() {
+			return base;
+		}
+
+		public void setBase(Graph base) {
+			this.base = base;
+		}
+
+		public int getSize() {
+			return size;
+		}
+
+		public void setSize(int size) {
+			this.size = size;
+		}
+
+		public int getImpasses() {
+			return impasses;
+		}
+
+		public int getDistance() {
+			return distance;
 		}
 	}
-
-	//getters and setters
-
-	public Graph getBase() {
-		return base;
-	}
-
-	public void setBase(Graph base) {
-		this.base = base;
-	}
-
-	public int getSize() {
-		return size;
-	}
-
-	public void setSize(int size) {
-		this.size = size;
-	}
-
-	public int getImpasses() {
-		return impasses;
-	}
-
-	public int getDistance() {
-		return distance;
-	}
-}
