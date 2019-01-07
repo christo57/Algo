@@ -2,7 +2,13 @@ package jeu;
 
 public class Main {
 	public static void main(String[] args) {
-		System.out.println(combinaisons(6,4,1,2));
+		int n = 4;
+		int k = 6;
+		int b = 1;
+		int m = 2;
+		
+		System.out.println("deroulement de l'algorithme pour les valeur n = " + n + ", k = " + k + ", b = " + b + " et m = " + m + " :");
+		System.out.println("le resultat est : " + combinaisons(k,n,b,m));
 	}
 	
 	public static int combinaisons(int k, int n, int b, int m) {
